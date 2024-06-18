@@ -1,0 +1,12 @@
+// Contains API declaration for board data bus.
+
+syntax = "proto3";
+
+package sniffer;
+
+// Represents data bus response content send to the client from the board.
+message DataBusContent {
+    uint32 deviceId = 1;
+    int32 value = 3;
+    uint32 nonce = 4;
+}

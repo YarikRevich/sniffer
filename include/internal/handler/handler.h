@@ -1,0 +1,195 @@
+#ifndef SNIFFER_HANDLER_H
+#define SNIFFER_HANDLER_H
+
+#include "response.h"
+#include "data.h"
+
+#include "codec.h"
+
+/**
+ * Represents exposed handlers.
+ */
+class Handler {
+public:
+    /**
+     * Handles high-level outcoming response, sent during one exact timer tick.
+     *
+     * @return status of the response handling.
+     */
+    static int handle_response();
+private:
+    /**
+     * Attempts to process outcoming response container if there is one.
+     *
+     * @param content - given request container content.
+     * @return status of the response container processing.
+     */
+    static int try_process_response_container(const light_detector::RequestContainer &content);
+
+    /**
+     * Attempts to transmit outcoming response container.
+     *
+     * @return status of the response container processing.
+     */
+    static int try_transmit_response_container();
+
+    /**
+     * Attempts to process data bus request content response.
+     *
+     * @param content - given data bus request content.
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_response(const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process data bus request content of raw data type response.
+     *
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_raw_data_type_response();
+
+    /**
+     * Attempts to process data bus request content of full data type response.
+     *
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_full_data_type_response();
+
+    /**
+     * Attempts to process data bus request content of infrared data type response.
+     *
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_infrared_data_type_response();
+
+    /**
+     * Attempts to process data bus request content of visible data type response.
+     *
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_visible_data_type_response();
+
+    /**
+     * Attempts to process info bus request content response.
+     *
+     * @param content - given info bus request content.
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_response(const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process info bus request content of gain info type response.
+     *
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_gain_info_type_response();
+
+    /**
+     * Attempts to process info bus request content of integral time info type response.
+     *
+     * @param content - given info bus request content.
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_integral_time_info_type_response();
+
+    /**
+     * Attempts to process info bus request content of processed requests info type response.
+     *
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_processed_requests_info_type_response();
+
+    /**
+     * Attempts to process info bus request content of device available info type response.
+     *
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_device_available_info_type_response();
+
+    /**
+     * Attempts to process settings bus request content response.
+     *
+     * @param content - given settings bus request content.
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_response(const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process settings bus request content of reset settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_reset_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set gain low settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_low_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set gain medium settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_medium_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set gain high settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_high_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set gain max settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_max_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time first settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_first_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time second settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_second_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time third settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_third_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time forth settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_forth_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time fifth settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_fifth_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time sixth settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_sixth_settings_type_response();
+};
+
+#endif //SNIFFER_HANDLER_H
