@@ -1,44 +1,4 @@
 #include "internal/core/core.h"
-#include "internal/state/state.h"
-#include "internal/handler/handler.h"
-
-//#include "driver/gpio.h"
-//#include "sdkconfig.h"
-
-//#include "esp_log.h"
-
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/uart.h"
-#include "driver/gpio.h"
-#include "sdkconfig.h"
-#include "esp_log.h"
-
-/**
- * This is an example which echos any data it receives on configured UART back to the sender,
- * with hardware flow control turned off. It does not use UART driver event queue.
- *
- * - Port: configured UART
- * - Receive (Rx) buffer: on
- * - Transmit (Tx) buffer: off
- * - Flow control: off
- * - Event queue: off
- * - Pin assignment: see defines below (See Kconfig)
- */
-
-//#define ECHO_TEST_TXD (1)
-//#define ECHO_TEST_RXD (3)
-//#define ECHO_TEST_RTS (0)
-//#define ECHO_TEST_CTS (0)
-//
-//#define ECHO_UART_PORT_NUM      (uart_port_t)(0)
-//#define ECHO_UART_BAUD_RATE     (115200)
-//#define ECHO_TASK_STACK_SIZE    (1024 * 2)
-
-static const char *TAG = "EST";
-
-#define BUF_SIZE (1024)
 
 void Core::run() {
     enable();
@@ -49,8 +9,12 @@ void Core::run() {
 }
 
 void Core::enable() {
+    gpio_pad_select_gpio((gpio_num_t)2);
+
+    gpio_set_direction((gpio_num_t)2, GPIO_MODE_OUTPUT);
+
     uart_config_t uart_config = {
-            .baud_rate = 115200,
+            .baud_rate = CONFIG_UART_BAUD_RATE,
             .data_bits = UART_DATA_8_BITS,
             .parity    = UART_PARITY_DISABLE,
             .stop_bits = UART_STOP_BITS_1,
@@ -81,8 +45,8 @@ void Core::enable() {
 
     wifi_config_t wifi_config = {
             .sta = {
-                    .ssid = "503",
-                    .password = "503a503b"
+                    .ssid = CONFIG_WIFI_SSID,
+                    .password = CONFIG_WIFI_PASSWORD
             },
     };
 
@@ -93,8 +57,6 @@ void Core::enable() {
     esp_wifi_start();
 
     xEventGroupWaitBits(*State::get_wifi_event_group(), BIT0, false, true, portMAX_DELAY);
-
-    ESP_LOGE(TAG, "ITWORKS");
 
     cfg = WIFI_INIT_CONFIG_DEFAULT();
     esp_wifi_init(&cfg);
@@ -111,6 +73,8 @@ void Core::enable() {
 
     esp_wifi_set_country(&wifi_country);
 
+    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &Core::handle_event, NULL);
+
     esp_wifi_start();
 
     const wifi_promiscuous_filter_t filter = {
@@ -123,88 +87,20 @@ void Core::enable() {
 
     esp_wifi_set_channel(CONFIG_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
 
-//    vTaskDelay(10000 / portTICK_PERIOD_MS);
-//
-//    ret = esp_wifi_connect();
-//    if (ret != ESP_OK) {
-//        ESP_LOGE(TAG, "WiFi connect failed! ret:%x", ret);
-//    }
+    Indicator::toggle_initialization_success();
 }
-
-
-//
-//static esp_err_t event_handler(void *ctx, system_event_t *event)
-//{
-//    switch(event->event_id){
-//        case SYSTEM_EVENT_STA_START:
-//            ESP_LOGI(TAG, "[WI-FI] Connecting to %s", CONFIG_WIFI_SSID);
-//            ESP_ERROR_CHECK(esp_wifi_connect());
-//            break;
-//
-//        case SYSTEM_EVENT_STA_GOT_IP: //wifi connected
-//            ESP_LOGI(TAG, "[WI-FI] Connected");
-//            WIFI_CONNECTED = true;
-//            set_blink_led(ON_MODE);
-//            xEventGroupSetBits(wifi_event_group, BIT0);
-//            break;
-//
-//        case SYSTEM_EVENT_STA_DISCONNECTED: //wifi lost connection
-//            ESP_LOGI(TAG, "[WI-FI] Disconnected");
-//            if(WIFI_CONNECTED == false)
-//                ESP_LOGW(TAG, "[WI-FI] Impossible to connect to wifi: wrong password and/or SSID or Wi-Fi down");
-//            WIFI_CONNECTED = false;
-//            set_blink_led(OFF_MODE);
-//            if(RUNNING){
-//                ESP_ERROR_CHECK(esp_wifi_connect());
-//            }
-//            else
-//                xEventGroupClearBits(wifi_event_group, BIT0);
-//            break;
-//
-//        default:
-//            break;
-//    }
-//
-//    return ESP_OK;
-//}
 
 void Core::handle_data(void *src, wifi_promiscuous_pkt_type_t type) {
     wifi_promiscuous_pkt_t *packet = (wifi_promiscuous_pkt_t *) src;
+
     wifi_header *header = (wifi_header *) packet->payload;
 
-//        char *ssid = nullptr;
-//
-//        uint8_t ssid_size = packet->payload[25];
-//
-//        if (ssid_size > 0) {
-//            ssid = get_ssid(packet->payload, ssid_size);
-//        }
-//
-        int sequence = get_sequence(packet->payload);
+    char *ht = Core::get_ht(packet->payload, packet->rx_ctrl.rssi, SSID_SIZE);
 
-    ESP_LOGE(TAG, "DATA RECEIVED: sender: %02x:%02x:%02x:%02x:%02x:%02x receiver: %02x:%02x:%02x:%02x:%02x:%02x", header->sender[0], header->sender[1], header->sender[2], header->sender[3], header->sender[4], header->sender[5], header->receiver[0], header->receiver[1], header->receiver[2], header->receiver[3], header->receiver[4], header->receiver[5]);
+    int sequence = Core::get_sequence(packet->payload);
 
-
-    //
-        char *ht = get_ht(packet->payload, packet->rx_ctrl.rssi, ssid_size);
-//
-//        ESP_LOGE(TAG, "DATA RECEIVED: %d", sizeof(packet->payload));
-////        uart_write_bytes((uart_port_t)(0), "W\n\r", 3);
-//
-//        Handler::transmit_data_bus_content_response(ssid);
-//
-////        ESP_LOGI(TAG, "ADDR=%02x:%02x:%02x:%02x:%02x:%02x, "
-////                      "SSID=%s, "
-////                      "RSSI=%02d, "
-////                      "SN=%d, "
-////                      "HT CAP. INFO=%s",
-////                 header->sa[0], header->sa[1], header->sa[2], header->sa[3], header->sa[4], header->sa[5],
-////                 ssid,
-////                 pkt->rx_ctrl.rssi,
-////                 sn,
-////                 htci);
-//
-//        // save_pkt_info(header->sa, ssid, ts, hash, pkt->rx_ctrl.rssi, sn, htci);
+    Handler::transmit_data_bus_content_response(
+            header->ssid, header->sender, header->receiver, ht, header->fctl, packet->rx_ctrl.rssi, sequence);
 }
 
 void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
@@ -214,7 +110,9 @@ void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id
         case WIFI_EVENT_STA_START:
             ret = esp_wifi_connect();
             if (ret != ESP_OK) {
-                ESP_LOGE(TAG, "WiFi connect failed! ret:%x", ret);
+                Indicator::toggle_initialization_failure();
+
+                return;
             }
 
             xEventGroupSetBits(*State::get_wifi_event_group(), BIT0);
@@ -223,7 +121,9 @@ void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id
         case WIFI_EVENT_STA_DISCONNECTED:
             ret = esp_wifi_connect();
             if (ret != ESP_OK) {
-                ESP_LOGE(TAG, "WiFi connect failed! ret:%x", ret);
+                Indicator::toggle_initialization_failure();
+
+                return;
             }
 
             xEventGroupSetBits(*State::get_wifi_event_group(), BIT0);
@@ -233,20 +133,6 @@ void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id
             break;
     }
 }
-
-char *Core::get_ssid(unsigned char *src, uint8_t size) {
-    char *result = new char[SSID_MAX_SIZE];
-
-    int i, j;
-
-    for (i = 26, j = 0; i < 26 + size; i++, j++) {
-        result[j] = src[i];
-    }
-
-    result[j] = '\0';
-
-    return result;
-};
 
 int Core::get_sequence(unsigned char *src) {
     int result;

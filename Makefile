@@ -2,6 +2,7 @@ ssid := $(or $(ssid), '')
 password := $(or $(password), '')
 country := $(or $(country), '')
 channel := $(or $(channel), '')
+baud_rate := $(or $(baud_rate), '')
 plugin := $(or $(plugin), '')
 
 .ONESHELL:
@@ -37,7 +38,13 @@ ifeq ($(channel), '')
 	@exit 1
 endif
 
-	CONFIG_WIFI_SSID="$(ssid)" CONFIG_WIFI_PASSWORD="$(password)" CONFIG_WIFI_COUNTRY="$(country)" CONFIG_WIFI_CHANNEL=$(channel) pio run --target=upload
+ifeq ($(baud_rate), '')
+	@echo "UART baud rate is not set!"
+
+	@exit 1
+endif
+
+	CONFIG_WIFI_SSID="$(ssid)" CONFIG_WIFI_PASSWORD="$(password)" CONFIG_WIFI_COUNTRY="$(country)" CONFIG_WIFI_CHANNEL=$(channel) CONFIG_UART_BAUD_RATE=$(baud_rate) pio run --target=upload
 
 .PHONY: generate
 generate: ## Generate ProtocolBuffers files(used mainly for development)

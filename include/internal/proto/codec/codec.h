@@ -23,7 +23,7 @@ public:
      * @param content - given response content.
      * @return status of the encode operation.
      */
-    static int encode_response_content(const sniffer::DataBusContent<SSID_MAX_SIZE>& content);
+    static int encode_response_content(const sniffer::DataBusContent& content);
 private:
     /**
      * Represents common instance of response buffer.

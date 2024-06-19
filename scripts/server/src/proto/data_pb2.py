@@ -14,13 +14,21 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\x12\x07sniffer\"u\n\x0e\x44\x61taBusContent\x12\x0c\n\x04ssid\x18\x01 \x01(\t\x12\x10\n\x08receiver\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\n\n\x02hp\x18\x04 \x01(\t\x12\x15\n\ramplification\x18\x05 \x01(\x05\x12\x10\n\x08sequence\x18\x06 \x01(\x05\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\x12\x07sniffer\"a\n\x04SSID\x12\r\n\x05\x66irst\x18\x01 \x01(\x05\x12\x0e\n\x06second\x18\x02 \x01(\x05\x12\r\n\x05third\x18\x03 \x01(\x05\x12\r\n\x05\x66orth\x18\x04 \x01(\x05\x12\r\n\x05\x66ifth\x18\x05 \x01(\x05\x12\r\n\x05sixth\x18\x06 \x01(\x05\"c\n\x06Sender\x12\r\n\x05\x66irst\x18\x01 \x01(\x05\x12\x0e\n\x06second\x18\x02 \x01(\x05\x12\r\n\x05third\x18\x03 \x01(\x05\x12\r\n\x05\x66orth\x18\x04 \x01(\x05\x12\r\n\x05\x66ifth\x18\x05 \x01(\x05\x12\r\n\x05sixth\x18\x06 \x01(\x05\"e\n\x08Receiver\x12\r\n\x05\x66irst\x18\x01 \x01(\x05\x12\x0e\n\x06second\x18\x02 \x01(\x05\x12\r\n\x05third\x18\x03 \x01(\x05\x12\r\n\x05\x66orth\x18\x04 \x01(\x05\x12\r\n\x05\x66ifth\x18\x05 \x01(\x05\x12\r\n\x05sixth\x18\x06 \x01(\x05\"P\n\x02HT\x12\r\n\x05\x66irst\x18\x01 \x01(\x05\x12\x0e\n\x06second\x18\x02 \x01(\x05\x12\r\n\x05third\x18\x03 \x01(\x05\x12\r\n\x05\x66orth\x18\x04 \x01(\x05\x12\r\n\x05\x66ifth\x18\x05 \x01(\x05\"\xc3\x01\n\x0e\x44\x61taBusContent\x12\x1b\n\x04ssid\x18\x01 \x01(\x0b\x32\r.sniffer.SSID\x12\x1f\n\x06sender\x18\x02 \x01(\x0b\x32\x0f.sniffer.Sender\x12#\n\x08receiver\x18\x03 \x01(\x0b\x32\x11.sniffer.Receiver\x12\x17\n\x02ht\x18\x04 \x01(\x0b\x32\x0b.sniffer.HT\x12\x0c\n\x04type\x18\x05 \x01(\x05\x12\x15\n\ramplification\x18\x06 \x01(\x05\x12\x10\n\x08sequence\x18\x07 \x01(\x05\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'data_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _globals['_DATABUSCONTENT']._serialized_start=23
-  _globals['_DATABUSCONTENT']._serialized_end=140
+  _globals['_SSID']._serialized_start=23
+  _globals['_SSID']._serialized_end=120
+  _globals['_SENDER']._serialized_start=122
+  _globals['_SENDER']._serialized_end=221
+  _globals['_RECEIVER']._serialized_start=223
+  _globals['_RECEIVER']._serialized_end=324
+  _globals['_HT']._serialized_start=326
+  _globals['_HT']._serialized_end=406
+  _globals['_DATABUSCONTENT']._serialized_start=409
+  _globals['_DATABUSCONTENT']._serialized_end=604
 # @@protoc_insertion_point(module_scope)

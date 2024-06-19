@@ -16,15 +16,24 @@
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "driver/uart.h"
+#include "driver/gpio.h"
+#include "esp32/rom/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include "sdkconfig.h"
 
-#define SSID_MAX_SIZE (32+1)
-#define MD5_SIZE (32+1)
+#include "internal/state/state.h"
+#include "internal/handler/handler.h"
+#include "internal/indicator/indicator.h"
+
+#define SSID_SIZE (6)
+//#define SENDER_SIZE (6)
+//#define RECEIVER_SIZE (6)
+#define HT_SIZE (5)
 
 /* TAG of ESP32 for I/O operation */
-//static const char *TAG = "ETS";
+static const char *TAG = "SNIFFER";
 
 /**
  * Represents header used for WIFI message.
@@ -72,15 +81,6 @@ private:
      * @param event_data - given event raw data.
      */
     static void handle_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
-
-    /**
-     * Composes ssid from the raw data.
-     *
-     * @param src - given raw data.
-     * @param size - given size of raw data.
-     * @return composed ssid.
-     */
-    static char* get_ssid(unsigned char *src, uint8_t size);
 
     /**
      * Retrieves sequence from the raw data.

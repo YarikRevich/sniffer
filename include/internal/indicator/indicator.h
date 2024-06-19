@@ -1,6 +1,10 @@
 #ifndef SNIFFER_INDICATOR_H
 #define SNIFFER_INDICATOR_H
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/gpio.h"
+
 /**
  * Represents indicator state machine.
  */

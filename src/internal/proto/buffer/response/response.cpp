@@ -35,6 +35,7 @@ bool ResponseBuffer::push(const uint8_t byte) {
         this->bytes[this->index] = byte;
         ++this->index;
     }
+
     return result;
 }
 
@@ -44,5 +45,6 @@ bool ResponseBuffer::push(const uint8_t *src, const uint32_t length) {
         memcpy(this->bytes + this->index, src, length);
         this->index += length;
     }
+
     return result;
 }

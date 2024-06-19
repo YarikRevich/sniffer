@@ -1,19 +1,33 @@
 #include "internal/indicator/indicator.h"
 
 void Indicator::toggle_initialization_success() {
-//    for (int i = 0; i < 4; i++) {
-//        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//        HAL_Delay(1000);
-//    }
-//
-//    HAL_Delay(2000);
-};
+    gpio_set_level((gpio_num_t)2, 0);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 1);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 0);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 1);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 0);
+}
 
 void Indicator::toggle_initialization_failure() {
-//    for (int i = 0; i < 4; i++) {
-//        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//        HAL_Delay(200);
-//    }
-//
-//    HAL_Delay(1000);
-};
+    gpio_set_level((gpio_num_t)2, 0);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 1);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 0);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 1);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    gpio_set_level((gpio_num_t)2, 0);
+}
