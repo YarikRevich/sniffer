@@ -1,13 +1,14 @@
 #ifndef SNIFFER_CODEC_H
 #define SNIFFER_CODEC_H
 
-#include "data.h"
-#include "response.h"
+#include "internal/proto/buffer/response/response.h"
+#include "internal/proto/generated/data.h"
+#include "internal/core/core.h"
 
 /**
  * Represents codec used to decompose and composite response.
  */
-class ProtoCodec {
+class Codec {
 public:
     /**
      * Retrieves common response buffer instance.
@@ -22,7 +23,7 @@ public:
      * @param content - given response content.
      * @return status of the encode operation.
      */
-    static int encode_response(const light_detector::ResponseContainer& content);
+    static int encode_response_content(const sniffer::DataBusContent<SSID_MAX_SIZE>& content);
 private:
     /**
      * Represents common instance of response buffer.

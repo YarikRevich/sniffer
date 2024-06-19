@@ -6,7 +6,10 @@ package sniffer;
 
 // Represents data bus response content send to the client from the board.
 message DataBusContent {
-    uint32 deviceId = 1;
-    int32 value = 3;
-    uint32 nonce = 4;
+    string ssid = 1;
+    string receiver = 2;
+    string sender = 3;
+    string hp = 4;
+    int32 amplification = 5;
+    int32 sequence = 6;
 }

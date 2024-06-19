@@ -12,15 +12,19 @@
 
 #include "esp_wifi.h"
 #include "esp_wifi_types.h"
+#include "esp_system.h"
 #include "esp_event.h"
-
-#include "md5.h"
+#include "nvs_flash.h"
+#include "driver/uart.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/event_groups.h"
 
 #define SSID_MAX_SIZE (32+1)
 #define MD5_SIZE (32+1)
 
 /* TAG of ESP32 for I/O operation */
-static const char *TAG = "ETS";
+//static const char *TAG = "ETS";
 
 /**
  * Represents header used for WIFI message.
@@ -40,17 +44,34 @@ typedef struct {
  */
 class Core {
 public:
-    static void hello();
+    /**
+     * Starts core logic of the application.
+     */
+    static void run();
 
 private:
     /**
-     * Composes hash from the raw data.
-     *
-     * @param src - given raw data.
-     * @param size - given size of raw data.
-     * @return composed hash.
+     * Enables WIFI module with additional packet handler.
      */
-    static char* get_hash(unsigned char *src, int size);
+    static void enable();
+
+    /**
+     * Handles incoming WIFI data.
+     *
+     * @param buff - given raw data.
+     * @param type - given data type.
+     */
+    static void handle_data(void *src, wifi_promiscuous_pkt_type_t type);
+
+    /**
+     * Handles incoming WIFI events.
+     *
+     * @param arg - given event type.
+     * @param event_base - given event base.
+     * @param event_id - given event identification.
+     * @param event_data - given event raw data.
+     */
+    static void handle_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 
     /**
      * Composes ssid from the raw data.

@@ -1,11 +1,11 @@
 /*
  *  This file is generated with Embedded Proto, PLEASE DO NOT EDIT!
- *  source: Content/data.proto
+ *  source: data.proto
  */
 
 // This file is generated. Please do not edit!
-#ifndef CONTENT_DATA_H
-#define CONTENT_DATA_H
+#ifndef DATA_H
+#define DATA_H
 
 #include <cstdint>
 #include <MessageInterface.h>
@@ -21,66 +21,150 @@
 
 // Include external proto definitions
 
-namespace light_detector {
+namespace sniffer {
 
-enum class DataType : uint32_t
-{
-  DataNone = 0,
-  Raw = 1,
-  Full = 2,
-  Infrared = 3,
-  Visible = 4
-};
-
-class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
+template<
+    uint32_t DataBusContent_ssid_LENGTH, 
+    uint32_t DataBusContent_receiver_LENGTH, 
+    uint32_t DataBusContent_sender_LENGTH, 
+    uint32_t DataBusContent_hp_LENGTH
+>
+class DataBusContent final: public ::EmbeddedProto::MessageInterface
 {
   public:
-    DataBusRequestContent() = default;
-    DataBusRequestContent(const DataBusRequestContent& rhs )
+    DataBusContent() = default;
+    DataBusContent(const DataBusContent& rhs )
     {
-      set_dataType(rhs.get_dataType());
+      set_ssid(rhs.get_ssid());
+      set_receiver(rhs.get_receiver());
+      set_sender(rhs.get_sender());
+      set_hp(rhs.get_hp());
+      set_amplification(rhs.get_amplification());
+      set_sequence(rhs.get_sequence());
     }
 
-    DataBusRequestContent(const DataBusRequestContent&& rhs ) noexcept
+    DataBusContent(const DataBusContent&& rhs ) noexcept
     {
-      set_dataType(rhs.get_dataType());
+      set_ssid(rhs.get_ssid());
+      set_receiver(rhs.get_receiver());
+      set_sender(rhs.get_sender());
+      set_hp(rhs.get_hp());
+      set_amplification(rhs.get_amplification());
+      set_sequence(rhs.get_sequence());
     }
 
-    ~DataBusRequestContent() override = default;
+    ~DataBusContent() override = default;
 
     enum class FieldNumber : uint32_t
     {
       NOT_SET = 0,
-      DATATYPE = 1
+      SSID = 1,
+      RECEIVER = 2,
+      SENDER = 3,
+      HP = 4,
+      AMPLIFICATION = 5,
+      SEQUENCE = 6
     };
 
-    DataBusRequestContent& operator=(const DataBusRequestContent& rhs)
+    DataBusContent& operator=(const DataBusContent& rhs)
     {
-      set_dataType(rhs.get_dataType());
+      set_ssid(rhs.get_ssid());
+      set_receiver(rhs.get_receiver());
+      set_sender(rhs.get_sender());
+      set_hp(rhs.get_hp());
+      set_amplification(rhs.get_amplification());
+      set_sequence(rhs.get_sequence());
       return *this;
     }
 
-    DataBusRequestContent& operator=(const DataBusRequestContent&& rhs) noexcept
+    DataBusContent& operator=(const DataBusContent&& rhs) noexcept
     {
-      set_dataType(rhs.get_dataType());
+      set_ssid(rhs.get_ssid());
+      set_receiver(rhs.get_receiver());
+      set_sender(rhs.get_sender());
+      set_hp(rhs.get_hp());
+      set_amplification(rhs.get_amplification());
+      set_sequence(rhs.get_sequence());
       return *this;
     }
 
-    static constexpr char const* DATATYPE_NAME = "dataType";
-    inline void clear_dataType() { dataType_.clear(); }
-    inline void set_dataType(const DataType& value) { dataType_ = value; }
-    inline void set_dataType(const DataType&& value) { dataType_ = value; }
-    inline const DataType& get_dataType() const { return dataType_.get(); }
-    inline DataType dataType() const { return dataType_.get(); }
+    static constexpr char const* SSID_NAME = "ssid";
+    inline void clear_ssid() { ssid_.clear(); }
+    inline ::EmbeddedProto::FieldString<DataBusContent_ssid_LENGTH>& mutable_ssid() { return ssid_; }
+    inline void set_ssid(const ::EmbeddedProto::FieldString<DataBusContent_ssid_LENGTH>& rhs) { ssid_.set(rhs); }
+    inline const ::EmbeddedProto::FieldString<DataBusContent_ssid_LENGTH>& get_ssid() const { return ssid_; }
+    inline const char* ssid() const { return ssid_.get_const(); }
+
+    static constexpr char const* RECEIVER_NAME = "receiver";
+    inline void clear_receiver() { receiver_.clear(); }
+    inline ::EmbeddedProto::FieldString<DataBusContent_receiver_LENGTH>& mutable_receiver() { return receiver_; }
+    inline void set_receiver(const ::EmbeddedProto::FieldString<DataBusContent_receiver_LENGTH>& rhs) { receiver_.set(rhs); }
+    inline const ::EmbeddedProto::FieldString<DataBusContent_receiver_LENGTH>& get_receiver() const { return receiver_; }
+    inline const char* receiver() const { return receiver_.get_const(); }
+
+    static constexpr char const* SENDER_NAME = "sender";
+    inline void clear_sender() { sender_.clear(); }
+    inline ::EmbeddedProto::FieldString<DataBusContent_sender_LENGTH>& mutable_sender() { return sender_; }
+    inline void set_sender(const ::EmbeddedProto::FieldString<DataBusContent_sender_LENGTH>& rhs) { sender_.set(rhs); }
+    inline const ::EmbeddedProto::FieldString<DataBusContent_sender_LENGTH>& get_sender() const { return sender_; }
+    inline const char* sender() const { return sender_.get_const(); }
+
+    static constexpr char const* HP_NAME = "hp";
+    inline void clear_hp() { hp_.clear(); }
+    inline ::EmbeddedProto::FieldString<DataBusContent_hp_LENGTH>& mutable_hp() { return hp_; }
+    inline void set_hp(const ::EmbeddedProto::FieldString<DataBusContent_hp_LENGTH>& rhs) { hp_.set(rhs); }
+    inline const ::EmbeddedProto::FieldString<DataBusContent_hp_LENGTH>& get_hp() const { return hp_; }
+    inline const char* hp() const { return hp_.get_const(); }
+
+    static constexpr char const* AMPLIFICATION_NAME = "amplification";
+    inline void clear_amplification() { amplification_.clear(); }
+    inline void set_amplification(const int32_t& value) { amplification_ = value; }
+    inline void set_amplification(const int32_t&& value) { amplification_ = value; }
+    inline int32_t& mutable_amplification() { return amplification_.get(); }
+    inline const int32_t& get_amplification() const { return amplification_.get(); }
+    inline int32_t amplification() const { return amplification_.get(); }
+
+    static constexpr char const* SEQUENCE_NAME = "sequence";
+    inline void clear_sequence() { sequence_.clear(); }
+    inline void set_sequence(const int32_t& value) { sequence_ = value; }
+    inline void set_sequence(const int32_t&& value) { sequence_ = value; }
+    inline int32_t& mutable_sequence() { return sequence_.get(); }
+    inline const int32_t& get_sequence() const { return sequence_.get(); }
+    inline int32_t sequence() const { return sequence_.get(); }
 
 
     ::EmbeddedProto::Error serialize(::EmbeddedProto::WriteBufferInterface& buffer) const override
     {
       ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
 
-      if((static_cast<DataType>(0) != dataType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      if(::EmbeddedProto::Error::NO_ERRORS == return_value)
       {
-        return_value = dataType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DATATYPE), buffer, false);
+        return_value = ssid_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SSID), buffer, false);
+      }
+
+      if(::EmbeddedProto::Error::NO_ERRORS == return_value)
+      {
+        return_value = receiver_.serialize_with_id(static_cast<uint32_t>(FieldNumber::RECEIVER), buffer, false);
+      }
+
+      if(::EmbeddedProto::Error::NO_ERRORS == return_value)
+      {
+        return_value = sender_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SENDER), buffer, false);
+      }
+
+      if(::EmbeddedProto::Error::NO_ERRORS == return_value)
+      {
+        return_value = hp_.serialize_with_id(static_cast<uint32_t>(FieldNumber::HP), buffer, false);
+      }
+
+      if((0 != amplification_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      {
+        return_value = amplification_.serialize_with_id(static_cast<uint32_t>(FieldNumber::AMPLIFICATION), buffer, false);
+      }
+
+      if((0 != sequence_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      {
+        return_value = sequence_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SEQUENCE), buffer, false);
       }
 
       return return_value;
@@ -99,8 +183,28 @@ class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
         id_tag = static_cast<FieldNumber>(id_number);
         switch(id_tag)
         {
-          case FieldNumber::DATATYPE:
-            return_value = dataType_.deserialize_check_type(buffer, wire_type);
+          case FieldNumber::SSID:
+            return_value = ssid_.deserialize_check_type(buffer, wire_type);
+            break;
+
+          case FieldNumber::RECEIVER:
+            return_value = receiver_.deserialize_check_type(buffer, wire_type);
+            break;
+
+          case FieldNumber::SENDER:
+            return_value = sender_.deserialize_check_type(buffer, wire_type);
+            break;
+
+          case FieldNumber::HP:
+            return_value = hp_.deserialize_check_type(buffer, wire_type);
+            break;
+
+          case FieldNumber::AMPLIFICATION:
+            return_value = amplification_.deserialize_check_type(buffer, wire_type);
+            break;
+
+          case FieldNumber::SEQUENCE:
+            return_value = sequence_.deserialize_check_type(buffer, wire_type);
             break;
 
           case FieldNumber::NOT_SET:
@@ -132,7 +236,12 @@ class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
 
     void clear() override
     {
-      clear_dataType();
+      clear_ssid();
+      clear_receiver();
+      clear_sender();
+      clear_hp();
+      clear_amplification();
+      clear_sequence();
 
     }
 
@@ -141,8 +250,23 @@ class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
       char const* name = nullptr;
       switch(fieldNumber)
       {
-        case FieldNumber::DATATYPE:
-          name = DATATYPE_NAME;
+        case FieldNumber::SSID:
+          name = SSID_NAME;
+          break;
+        case FieldNumber::RECEIVER:
+          name = RECEIVER_NAME;
+          break;
+        case FieldNumber::SENDER:
+          name = SENDER_NAME;
+          break;
+        case FieldNumber::HP:
+          name = HP_NAME;
+          break;
+        case FieldNumber::AMPLIFICATION:
+          name = AMPLIFICATION_NAME;
+          break;
+        case FieldNumber::SEQUENCE:
+          name = SEQUENCE_NAME;
           break;
         default:
           name = "Invalid FieldNumber";
@@ -204,7 +328,12 @@ class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
         left_chars.size -= n_chars_used;
       }
 
-      left_chars = dataType_.to_string(left_chars, indent_level + 2, DATATYPE_NAME, true);
+      left_chars = ssid_.to_string(left_chars, indent_level + 2, SSID_NAME, true);
+      left_chars = receiver_.to_string(left_chars, indent_level + 2, RECEIVER_NAME, false);
+      left_chars = sender_.to_string(left_chars, indent_level + 2, SENDER_NAME, false);
+      left_chars = hp_.to_string(left_chars, indent_level + 2, HP_NAME, false);
+      left_chars = amplification_.to_string(left_chars, indent_level + 2, AMPLIFICATION_NAME, false);
+      left_chars = sequence_.to_string(left_chars, indent_level + 2, SEQUENCE_NAME, false);
   
       if( 0 == indent_level) 
       {
@@ -229,294 +358,14 @@ class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
   private:
 
 
-      EmbeddedProto::enumeration<DataType> dataType_ = static_cast<DataType>(0);
+      ::EmbeddedProto::FieldString<DataBusContent_ssid_LENGTH> ssid_;
+      ::EmbeddedProto::FieldString<DataBusContent_receiver_LENGTH> receiver_;
+      ::EmbeddedProto::FieldString<DataBusContent_sender_LENGTH> sender_;
+      ::EmbeddedProto::FieldString<DataBusContent_hp_LENGTH> hp_;
+      EmbeddedProto::int32 amplification_ = 0;
+      EmbeddedProto::int32 sequence_ = 0;
 
 };
 
-class DataBusResponseContent final: public ::EmbeddedProto::MessageInterface
-{
-  public:
-    DataBusResponseContent() = default;
-    DataBusResponseContent(const DataBusResponseContent& rhs )
-    {
-      set_deviceId(rhs.get_deviceId());
-      set_dataType(rhs.get_dataType());
-      set_value(rhs.get_value());
-      set_nonce(rhs.get_nonce());
-    }
-
-    DataBusResponseContent(const DataBusResponseContent&& rhs ) noexcept
-    {
-      set_deviceId(rhs.get_deviceId());
-      set_dataType(rhs.get_dataType());
-      set_value(rhs.get_value());
-      set_nonce(rhs.get_nonce());
-    }
-
-    ~DataBusResponseContent() override = default;
-
-    enum class FieldNumber : uint32_t
-    {
-      NOT_SET = 0,
-      DEVICEID = 1,
-      DATATYPE = 2,
-      VALUE = 3,
-      NONCE = 4
-    };
-
-    DataBusResponseContent& operator=(const DataBusResponseContent& rhs)
-    {
-      set_deviceId(rhs.get_deviceId());
-      set_dataType(rhs.get_dataType());
-      set_value(rhs.get_value());
-      set_nonce(rhs.get_nonce());
-      return *this;
-    }
-
-    DataBusResponseContent& operator=(const DataBusResponseContent&& rhs) noexcept
-    {
-      set_deviceId(rhs.get_deviceId());
-      set_dataType(rhs.get_dataType());
-      set_value(rhs.get_value());
-      set_nonce(rhs.get_nonce());
-      return *this;
-    }
-
-    static constexpr char const* DEVICEID_NAME = "deviceId";
-    inline void clear_deviceId() { deviceId_.clear(); }
-    inline void set_deviceId(const uint32_t& value) { deviceId_ = value; }
-    inline void set_deviceId(const uint32_t&& value) { deviceId_ = value; }
-    inline uint32_t& mutable_deviceId() { return deviceId_.get(); }
-    inline const uint32_t& get_deviceId() const { return deviceId_.get(); }
-    inline uint32_t deviceId() const { return deviceId_.get(); }
-
-    static constexpr char const* DATATYPE_NAME = "dataType";
-    inline void clear_dataType() { dataType_.clear(); }
-    inline void set_dataType(const DataType& value) { dataType_ = value; }
-    inline void set_dataType(const DataType&& value) { dataType_ = value; }
-    inline const DataType& get_dataType() const { return dataType_.get(); }
-    inline DataType dataType() const { return dataType_.get(); }
-
-    static constexpr char const* VALUE_NAME = "value";
-    inline void clear_value() { value_.clear(); }
-    inline void set_value(const int32_t& value) { value_ = value; }
-    inline void set_value(const int32_t&& value) { value_ = value; }
-    inline int32_t& mutable_value() { return value_.get(); }
-    inline const int32_t& get_value() const { return value_.get(); }
-    inline int32_t value() const { return value_.get(); }
-
-    static constexpr char const* NONCE_NAME = "nonce";
-    inline void clear_nonce() { nonce_.clear(); }
-    inline void set_nonce(const uint32_t& value) { nonce_ = value; }
-    inline void set_nonce(const uint32_t&& value) { nonce_ = value; }
-    inline uint32_t& mutable_nonce() { return nonce_.get(); }
-    inline const uint32_t& get_nonce() const { return nonce_.get(); }
-    inline uint32_t nonce() const { return nonce_.get(); }
-
-
-    ::EmbeddedProto::Error serialize(::EmbeddedProto::WriteBufferInterface& buffer) const override
-    {
-      ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
-
-      if((0U != deviceId_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-      {
-        return_value = deviceId_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DEVICEID), buffer, false);
-      }
-
-      if((static_cast<DataType>(0) != dataType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-      {
-        return_value = dataType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DATATYPE), buffer, false);
-      }
-
-      if((0 != value_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-      {
-        return_value = value_.serialize_with_id(static_cast<uint32_t>(FieldNumber::VALUE), buffer, false);
-      }
-
-      if((0U != nonce_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-      {
-        return_value = nonce_.serialize_with_id(static_cast<uint32_t>(FieldNumber::NONCE), buffer, false);
-      }
-
-      return return_value;
-    };
-
-    ::EmbeddedProto::Error deserialize(::EmbeddedProto::ReadBufferInterface& buffer) override
-    {
-      ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
-      ::EmbeddedProto::WireFormatter::WireType wire_type = ::EmbeddedProto::WireFormatter::WireType::VARINT;
-      uint32_t id_number = 0;
-      FieldNumber id_tag = FieldNumber::NOT_SET;
-
-      ::EmbeddedProto::Error tag_value = ::EmbeddedProto::WireFormatter::DeserializeTag(buffer, wire_type, id_number);
-      while((::EmbeddedProto::Error::NO_ERRORS == return_value) && (::EmbeddedProto::Error::NO_ERRORS == tag_value))
-      {
-        id_tag = static_cast<FieldNumber>(id_number);
-        switch(id_tag)
-        {
-          case FieldNumber::DEVICEID:
-            return_value = deviceId_.deserialize_check_type(buffer, wire_type);
-            break;
-
-          case FieldNumber::DATATYPE:
-            return_value = dataType_.deserialize_check_type(buffer, wire_type);
-            break;
-
-          case FieldNumber::VALUE:
-            return_value = value_.deserialize_check_type(buffer, wire_type);
-            break;
-
-          case FieldNumber::NONCE:
-            return_value = nonce_.deserialize_check_type(buffer, wire_type);
-            break;
-
-          case FieldNumber::NOT_SET:
-            return_value = ::EmbeddedProto::Error::INVALID_FIELD_ID;
-            break;
-
-          default:
-            return_value = skip_unknown_field(buffer, wire_type);
-            break;
-        }
-
-        if(::EmbeddedProto::Error::NO_ERRORS == return_value)
-        {
-          // Read the next tag.
-          tag_value = ::EmbeddedProto::WireFormatter::DeserializeTag(buffer, wire_type, id_number);
-        }
-      }
-
-      // When an error was detect while reading the tag but no other errors where found, set it in the return value.
-      if((::EmbeddedProto::Error::NO_ERRORS == return_value)
-         && (::EmbeddedProto::Error::NO_ERRORS != tag_value)
-         && (::EmbeddedProto::Error::END_OF_BUFFER != tag_value)) // The end of the buffer is not an array in this case.
-      {
-        return_value = tag_value;
-      }
-
-      return return_value;
-    };
-
-    void clear() override
-    {
-      clear_deviceId();
-      clear_dataType();
-      clear_value();
-      clear_nonce();
-
-    }
-
-    static char const* field_number_to_name(const FieldNumber fieldNumber)
-    {
-      char const* name = nullptr;
-      switch(fieldNumber)
-      {
-        case FieldNumber::DEVICEID:
-          name = DEVICEID_NAME;
-          break;
-        case FieldNumber::DATATYPE:
-          name = DATATYPE_NAME;
-          break;
-        case FieldNumber::VALUE:
-          name = VALUE_NAME;
-          break;
-        case FieldNumber::NONCE:
-          name = NONCE_NAME;
-          break;
-        default:
-          name = "Invalid FieldNumber";
-          break;
-      }
-      return name;
-    }
-
-#ifdef MSG_TO_STRING
-
-    ::EmbeddedProto::string_view to_string(::EmbeddedProto::string_view& str) const
-    {
-      return this->to_string(str, 0, nullptr, true);
-    }
-
-    ::EmbeddedProto::string_view to_string(::EmbeddedProto::string_view& str, const uint32_t indent_level, char const* name, const bool first_field) const override
-    {
-      ::EmbeddedProto::string_view left_chars = str;
-      int32_t n_chars_used = 0;
-
-      if(!first_field)
-      {
-        // Add a comma behind the previous field.
-        n_chars_used = snprintf(left_chars.data, left_chars.size, ",\n");
-        if(0 < n_chars_used)
-        {
-          // Update the character pointer and characters left in the array.
-          left_chars.data += n_chars_used;
-          left_chars.size -= n_chars_used;
-        }
-      }
-
-      if(nullptr != name)
-      {
-        if( 0 == indent_level)
-        {
-          n_chars_used = snprintf(left_chars.data, left_chars.size, "\"%s\": {\n", name);
-        }
-        else
-        {
-          n_chars_used = snprintf(left_chars.data, left_chars.size, "%*s\"%s\": {\n", indent_level, " ", name);
-        }
-      }
-      else
-      {
-        if( 0 == indent_level)
-        {
-          n_chars_used = snprintf(left_chars.data, left_chars.size, "{\n");
-        }
-        else
-        {
-          n_chars_used = snprintf(left_chars.data, left_chars.size, "%*s{\n", indent_level, " ");
-        }
-      }
-      
-      if(0 < n_chars_used)
-      {
-        left_chars.data += n_chars_used;
-        left_chars.size -= n_chars_used;
-      }
-
-      left_chars = deviceId_.to_string(left_chars, indent_level + 2, DEVICEID_NAME, true);
-      left_chars = dataType_.to_string(left_chars, indent_level + 2, DATATYPE_NAME, false);
-      left_chars = value_.to_string(left_chars, indent_level + 2, VALUE_NAME, false);
-      left_chars = nonce_.to_string(left_chars, indent_level + 2, NONCE_NAME, false);
-  
-      if( 0 == indent_level) 
-      {
-        n_chars_used = snprintf(left_chars.data, left_chars.size, "\n}");
-      }
-      else 
-      {
-        n_chars_used = snprintf(left_chars.data, left_chars.size, "\n%*s}", indent_level, " ");
-      }
-
-      if(0 < n_chars_used)
-      {
-        left_chars.data += n_chars_used;
-        left_chars.size -= n_chars_used;
-      }
-
-      return left_chars;
-    }
-
-#endif // End of MSG_TO_STRING
-
-  private:
-
-
-      EmbeddedProto::uint32 deviceId_ = 0U;
-      EmbeddedProto::enumeration<DataType> dataType_ = static_cast<DataType>(0);
-      EmbeddedProto::int32 value_ = 0;
-      EmbeddedProto::uint32 nonce_ = 0U;
-
-};
-
-} // End of namespace light_detector
-#endif // CONTENT_DATA_H
+} // End of namespace sniffer
+#endif // DATA_H

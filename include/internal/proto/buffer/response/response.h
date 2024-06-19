@@ -33,11 +33,6 @@ public:
      */
     [[nodiscard]] uint32_t get_size() const override;
 
-//    /**
-//     * @see EmbeddedProto::WriteBufferInterface
-//     */
-//    [[nodiscard]] uint8_t get_size_small() const;
-
     /**
      * @see EmbeddedProto::WriteBufferInterface
      */
