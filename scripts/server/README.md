@@ -1,7 +1,8 @@
-# CLI
+# Servver
 
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![MacOS](https://img.shields.io/badge/MacOS-8773f5?style=for-the-badge&logo=macos&logoColor=black)
+![Windows](https://img.shields.io/badge/Windows-f8f3d5?style=for-the-badge&logo=windows&logoColor=black)
 [![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
 ## General Information
@@ -244,24 +245,7 @@ $ light-detector-cli get_data --device="/dev/cu.usbmodem1203" --baud_rate="9600"
 ...
 ```
 
-Available **figure** values:
-* plot
-* stairs
-* scatter
-
-#### Plot
-
-![](./docs/examples/get-data-plot.png)
-
-#### Stairs
-
-![](./docs/examples/get-data-stairs.png)
-
-#### Scatter
-
-![](./docs/examples/get-data-scatter.png)
 
 ## Authors
 
 * Yaroslav Svitlytskyi
-* Valeria Metelska
