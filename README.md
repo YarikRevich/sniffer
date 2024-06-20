@@ -5,17 +5,19 @@
 
 ## General Information
 
-A driver-like application, which allows to use ESP32 board as a sniffer for the provided **WIFI** network.
+A driver-like application, which allows to use **ESP32** board as a sniffer for the provided **WIFI** network.
 
 Includes following features:
 * Retrieve network packets
-* Collect packets in in-memory storage on server side and make it available via public **API**
+* Collect network packets in in-memory storage on server side and make it available via public **API**
 
 ![](./Docs/Examples/high-level-design.png)
 
 ## Setup
 
 First of all connect your device to the board using Serial port.
+
+![](https://i0.wp.com/randomnerdtutorials.com/wp-content/uploads/2018/08/ESP32-DOIT-DEVKIT-V1-Board-Pinout-30-GPIOs-Copy.png?quality=100&strip=all&ssl=1)
 
 All supportive setup related operations are processed via **Makefile** placed in the project root directory.
 

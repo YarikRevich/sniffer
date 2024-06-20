@@ -9,11 +9,11 @@ void Core::run() {
 }
 
 void Core::enable() {
-    esp_log_level_set("*", ESP_LOG_NONE);
+//    esp_log_level_set("*", ESP_LOG_NONE);
 
-    gpio_pad_select_gpio((gpio_num_t)2);
+    gpio_pad_select_gpio((gpio_num_t) 2);
 
-    gpio_set_direction((gpio_num_t)2, GPIO_MODE_OUTPUT);
+    gpio_set_direction((gpio_num_t) 2, GPIO_MODE_OUTPUT);
 
     uart_config_t uart_config = {
             .baud_rate = CONFIG_UART_BAUD_RATE,
@@ -29,9 +29,9 @@ void Core::enable() {
     intr_alloc_flags = ESP_INTR_FLAG_IRAM;
 #endif
 
-    ESP_ERROR_CHECK(uart_driver_install((uart_port_t)(0), 1024 * 2, 0, 0, NULL, intr_alloc_flags));
-    ESP_ERROR_CHECK(uart_param_config((uart_port_t)(0), &uart_config));
-    ESP_ERROR_CHECK(uart_set_pin((uart_port_t)(0), 1, 3, 0, 0));
+    uart_driver_install((uart_port_t)(0), 1024 * 2, 0, 0, NULL, intr_alloc_flags);
+    uart_param_config((uart_port_t)(0), &uart_config);
+    uart_set_pin((uart_port_t)(0), 1, 3, 0, 0);
 
     esp_event_loop_create_default();
 
@@ -48,7 +48,10 @@ void Core::enable() {
     wifi_config_t wifi_config = {
             .sta = {
                     .ssid = CONFIG_WIFI_SSID,
-                    .password = CONFIG_WIFI_PASSWORD
+                    .password = CONFIG_WIFI_PASSWORD,
+                    .threshold = {
+                            .authmode = WIFI_AUTH_WPA2_PSK
+                    }
             },
     };
 
@@ -57,39 +60,6 @@ void Core::enable() {
     esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &Core::handle_event, NULL);
 
     esp_wifi_start();
-
-    xEventGroupWaitBits(*State::get_wifi_event_group(), BIT0, false, true, portMAX_DELAY);
-
-    cfg = WIFI_INIT_CONFIG_DEFAULT();
-    esp_wifi_init(&cfg);
-
-    esp_wifi_set_storage(WIFI_STORAGE_RAM);
-    esp_wifi_set_mode(WIFI_MODE_NULL);
-
-    const wifi_country_t wifi_country = {
-            .cc = CONFIG_WIFI_COUNTRY,
-            .schan = 1,
-            .nchan = 13,
-            .policy = WIFI_COUNTRY_POLICY_AUTO
-    };
-
-    esp_wifi_set_country(&wifi_country);
-
-    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &Core::handle_event, NULL);
-
-    esp_wifi_start();
-
-    const wifi_promiscuous_filter_t filter = {
-            .filter_mask = WIFI_EVENT_MASK_AP_PROBEREQRECVED
-    };
-
-    esp_wifi_set_promiscuous_filter(&filter);
-    esp_wifi_set_promiscuous_rx_cb(&Core::handle_data);
-    esp_wifi_set_promiscuous(true);
-
-    esp_wifi_set_channel(CONFIG_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
-
-    Indicator::toggle_initialization_success();
 }
 
 void Core::handle_data(void *src, wifi_promiscuous_pkt_type_t type) {
@@ -106,33 +76,41 @@ void Core::handle_data(void *src, wifi_promiscuous_pkt_type_t type) {
 }
 
 void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
-    unsigned int ret = 0;
+    if (event_id == WIFI_EVENT_STA_START) {
+        esp_wifi_connect();
 
-    switch (event_id) {
-        case WIFI_EVENT_STA_START:
-            ret = esp_wifi_connect();
-            if (ret != ESP_OK) {
-                Indicator::toggle_initialization_failure();
+        wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+        esp_wifi_init(&cfg);
 
-                return;
-            }
+        esp_wifi_set_storage(WIFI_STORAGE_RAM);
+        esp_wifi_set_mode(WIFI_MODE_NULL);
 
-            xEventGroupSetBits(*State::get_wifi_event_group(), BIT0);
+        const wifi_country_t wifi_country = {
+                .cc = CONFIG_WIFI_COUNTRY,
+                .schan = 1,
+                .nchan = 13,
+                .policy = WIFI_COUNTRY_POLICY_AUTO
+        };
 
-            break;
-        case WIFI_EVENT_STA_DISCONNECTED:
-            ret = esp_wifi_connect();
-            if (ret != ESP_OK) {
-                Indicator::toggle_initialization_failure();
+        esp_wifi_set_country(&wifi_country);
 
-                return;
-            }
+        esp_wifi_start();
 
-            xEventGroupSetBits(*State::get_wifi_event_group(), BIT0);
+        const wifi_promiscuous_filter_t filter = {
+                .filter_mask = WIFI_EVENT_MASK_AP_PROBEREQRECVED
+        };
 
-            break;
-        default:
-            break;
+        esp_wifi_set_promiscuous_filter(&filter);
+        esp_wifi_set_promiscuous_rx_cb(&Core::handle_data);
+        esp_wifi_set_promiscuous(true);
+
+        esp_wifi_set_channel(CONFIG_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
+
+        Indicator::toggle_initialization_success();
+    } else if (event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        Indicator::toggle_initialization_failure();
+
+        esp_restart();
     }
 }
 
