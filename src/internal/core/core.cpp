@@ -9,6 +9,8 @@ void Core::run() {
 }
 
 void Core::enable() {
+    esp_log_level_set("*", ESP_LOG_NONE);
+
     gpio_pad_select_gpio((gpio_num_t)2);
 
     gpio_set_direction((gpio_num_t)2, GPIO_MODE_OUTPUT);

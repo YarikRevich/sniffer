@@ -13,7 +13,7 @@ void Handler::transmit_data_bus_content_response(
     raw_ssid.set_sixth(ssid[5]);
 
     data_bus_content.set_ssid(raw_ssid);
-
+//
     sniffer::Sender raw_sender;
     raw_sender.set_first(sender[0]);
     raw_sender.set_second(sender[1]);
@@ -58,7 +58,7 @@ void Handler::transmit_data_bus_content_response(
     auto response_buffer = Codec::get_response_buffer();
 
     uart_write_bytes((uart_port_t)(0), response_buffer->get_raw_buffer(), response_buffer->get_size());
-    uart_write_bytes((uart_port_t)(0), "\n", 1);
+    uart_write_bytes((uart_port_t)(0), "\n\r\n\r", 4);
 
     response_buffer->clear();
 }

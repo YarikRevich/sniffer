@@ -14,6 +14,7 @@
 #include "esp_wifi_types.h"
 #include "esp_system.h"
 #include "esp_event.h"
+#include "esp_log.h"
 #include "nvs_flash.h"
 #include "driver/uart.h"
 #include "driver/gpio.h"
@@ -23,13 +24,12 @@
 #include "freertos/event_groups.h"
 #include "sdkconfig.h"
 
+
 #include "internal/state/state.h"
 #include "internal/handler/handler.h"
 #include "internal/indicator/indicator.h"
 
 #define SSID_SIZE (6)
-//#define SENDER_SIZE (6)
-//#define RECEIVER_SIZE (6)
 #define HT_SIZE (5)
 
 /* TAG of ESP32 for I/O operation */

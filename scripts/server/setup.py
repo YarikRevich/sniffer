@@ -33,7 +33,7 @@ def read_requirements() -> list[str]:
 
 
 setup(
-    name="light-detector-cli",
+    name="sniffer-server",
     version="0.0.1",
     description="A tool used to serve incoming sniffer data from ESP32 board as public API.",
     url="https://github.com/YarikRevich/sniffer",
