@@ -1,0 +1,55 @@
+// Contains API declaration for board data bus.
+
+syntax = "proto3";
+
+package sniffer;
+
+// Represents ssid attribute of the content.
+message SSID {
+    int32 first = 1;
+    int32 second = 2;
+    int32 third = 3;
+    int32 forth = 4;
+    int32 fifth = 5;
+    int32 sixth = 6;
+}
+
+// Represents sender attribute of the content.
+message Sender {
+    int32 first = 1;
+    int32 second = 2;
+    int32 third = 3;
+    int32 forth = 4;
+    int32 fifth = 5;
+    int32 sixth = 6;
+}
+
+// Represents receiver attribute of the content.
+message Receiver {
+    int32 first = 1;
+    int32 second = 2;
+    int32 third = 3;
+    int32 forth = 4;
+    int32 fifth = 5;
+    int32 sixth = 6;
+}
+
+// Represents ht attribute of the content.
+message HT {
+    int32 first = 1;
+    int32 second = 2;
+    int32 third = 3;
+    int32 forth = 4;
+    int32 fifth = 5;
+}
+
+// Represents data bus response content send to the client from the board.
+message DataBusContent {
+    SSID ssid = 1;
+    Sender sender = 2;
+    Receiver receiver = 3;
+    HT ht = 4;
+    int32 type = 5;
+    int32 amplification = 6;
+    int32 sequence = 7;
+}
