@@ -1,2 +1,0 @@
-[console_scripts]
-sniffer-server = src.__main__:main
