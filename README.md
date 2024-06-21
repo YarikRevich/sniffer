@@ -11,7 +11,7 @@ Includes following features:
 * Retrieve network packets
 * Collect network packets in in-memory storage on server side and make it available via public **API**
 
-![](./Docs/Examples/high-level-design.png)
+![](./docs/high-level-design.png)
 
 ## Setup
 
@@ -40,7 +40,11 @@ make install ssid="505" password="505d505c" country="PL" channel=11 baud_rate=11
 
 After successful installation, the board should signalize successful connection with the **WIFI** network:
 
-![](./docs/examples/signalization.gif)
+![](./docs/examples/signalization_success.gif)
+
+If given credentials are incorrect, then the board will signalize in the following way:
+
+![](./docs/examples/signalization_failure.gif)
 
 ## Scripts
 

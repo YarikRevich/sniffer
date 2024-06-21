@@ -57,27 +57,17 @@ void Core::enable() {
 
     esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
 
-    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &Core::handle_event, NULL);
+    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &Core::handle_init_stage_event, NULL);
 
     esp_wifi_start();
 }
 
-void Core::handle_data(void *src, wifi_promiscuous_pkt_type_t type) {
-    wifi_promiscuous_pkt_t *packet = (wifi_promiscuous_pkt_t *) src;
-
-    wifi_header *header = (wifi_header *) packet->payload;
-
-    char *ht = Core::get_ht(packet->payload, packet->rx_ctrl.rssi, SSID_SIZE);
-
-    int sequence = Core::get_sequence(packet->payload);
-
-    Handler::transmit_data_bus_content_response(
-            header->ssid, header->sender, header->receiver, ht, header->fctl, packet->rx_ctrl.rssi, sequence);
-}
-
-void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
+void Core::handle_init_stage_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
     if (event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
+
+    } else if (event_id == WIFI_EVENT_STA_CONNECTED) {
+        ESP_ERROR_CHECK(esp_event_handler_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, &Core::handle_init_stage_event));
 
         wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
         esp_wifi_init(&cfg);
@@ -94,8 +84,6 @@ void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id
 
         esp_wifi_set_country(&wifi_country);
 
-        esp_wifi_start();
-
         const wifi_promiscuous_filter_t filter = {
                 .filter_mask = WIFI_EVENT_MASK_AP_PROBEREQRECVED
         };
@@ -106,12 +94,27 @@ void Core::handle_event(void *arg, esp_event_base_t event_base, int32_t event_id
 
         esp_wifi_set_channel(CONFIG_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
 
+        esp_wifi_start();
+
         Indicator::toggle_initialization_success();
     } else if (event_id == WIFI_EVENT_STA_DISCONNECTED) {
         Indicator::toggle_initialization_failure();
 
         esp_restart();
     }
+}
+
+void Core::handle_data(void *src, wifi_promiscuous_pkt_type_t type) {
+    wifi_promiscuous_pkt_t *packet = (wifi_promiscuous_pkt_t *) src;
+
+    wifi_header *header = (wifi_header *) packet->payload;
+
+    char *ht = Core::get_ht(packet->payload, packet->rx_ctrl.rssi, SSID_SIZE);
+
+    int sequence = Core::get_sequence(packet->payload);
+
+    Handler::transmit_data_bus_content_response(
+            header->ssid, header->sender, header->receiver, ht, header->fctl, packet->rx_ctrl.rssi, sequence);
 }
 
 int Core::get_sequence(unsigned char *src) {

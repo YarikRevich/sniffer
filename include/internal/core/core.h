@@ -73,14 +73,14 @@ private:
     static void handle_data(void *src, wifi_promiscuous_pkt_type_t type);
 
     /**
-     * Handles incoming WIFI events.
+     * Handles incoming initial stage WIFI events.
      *
      * @param arg - given event type.
      * @param event_base - given event base.
      * @param event_id - given event identification.
      * @param event_data - given event raw data.
      */
-    static void handle_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
+    static void handle_init_stage_event(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 
     /**
      * Retrieves sequence from the raw data.
