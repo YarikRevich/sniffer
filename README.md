@@ -42,7 +42,7 @@ After successful installation, the board should signalize successful connection 
 
 ![](./docs/examples/signalization_success.gif)
 
-If given credentials are incorrect, then the board will signalize in the following way:
+If given credentials are incorrect, then the board will signalize in the following way and board will be restarted:
 
 ![](./docs/examples/signalization_failure.gif)
 
